@@ -10,6 +10,7 @@ snake_python/
 ├── snake.py          # Contains the Snake class (specific snake logic)
 └── food.py           # Contains the Food class (food logic)
 
+
 En français
 
 snake_python/
