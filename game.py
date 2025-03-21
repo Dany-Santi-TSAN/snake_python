@@ -16,17 +16,15 @@ class Game :
 
     def handle_events(self):
         # handle event such as quitting
-        while self.running:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    self.running = False
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                self.running = False
 
     def update(self):
         # update the screen with game components
         self.screen.fill((163,198,65)) #fill screen with green like 3310 version
         self.snake.draw(self.screen)
         self.food.draw(self.screen)
-        pygame.display.flip()
         pygame.display.flip() #refresh
 
     def run(self):
