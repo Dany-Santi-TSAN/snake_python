@@ -14,5 +14,5 @@ class Food:
 
     def draw(self, screen):
         # Draw the food as an apple on the screen
-        # Radius is 10 px
-        pygame.draw.circle(screen, self.color, self.position, 10)
+        # pygame.draw.circle(screen, self.color, self.position, 10)
+        pygame.draw.rect(screen, self.color, pygame.Rect(self.position[0], self.position[1], 10, 10))

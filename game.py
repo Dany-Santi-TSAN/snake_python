@@ -1,27 +1,54 @@
 import pygame
+import sys
 from snake import Snake
 from food import Food
+from display import Display
 
 class Game :
     # contains all variables and functions necessary for the smooth gameplay
 
     def __init__(self):
         # initialize windows, title and clock
+        pygame.init()
         self.screen = pygame.display.set_mode((800, 600)) # windows
         pygame.display.set_caption('Snake Game') # title
-        self.clock = pygame.time.Clock() # clock
+        self.clock = pygame.time.Clock() # speed
+        self.font = pygame.font.SysFont('Arial', 36) # front
+
         self.running = True
+        self.state = "HOME"  # "HOME", "PLAY", "GAME_OVER"
+
+        self.player_name = ""
+        self.best_score = 0
+        self.input_active = True
+        self.playing = False
+
         self.snake = Snake()
         self.food = Food()
+        self.display = Display()
         self.score = 0
+        self.base_speed = 5
+
+        self.leaderboard = []
 
     def handle_events(self):
-        # handle event such as quitting
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-        # add keypad
-            elif event.type == pygame.KEYDOWN:
+                pygame.quit()
+                sys.exit()
+
+            elif self.state == "HOME" and event.type == pygame.KEYDOWN:
+                if self.input_active:
+                    if event.key == pygame.K_RETURN:
+                        self.state = "PLAY"
+                    elif event.key == pygame.K_BACKSPACE:
+                        self.player_name = self.player_name[:-1]
+                    else:
+                        if len(self.player_name) < 10 and event.unicode.isprintable():
+                            self.player_name += event.unicode
+
+            elif self.state == "PLAY" and event.type == pygame.KEYDOWN:
                 if event.key == pygame.K_UP:
                     self.snake.change_direction((0, -10))
                 elif event.key == pygame.K_DOWN:
@@ -37,20 +64,16 @@ class Game :
         self.snake.move(self.food, self)
         self.snake.draw(self.screen)
         self.food.draw(self.screen)
-        self.display_score()
+        self.display.display_score(self.screen, self.score, self.player_name)
+        self.display.display_speed(self.screen, self.clock)
         pygame.display.flip() #refresh
-
-    def display_score(self):
-        # Afficher le score en haut à gauche de l'écran
-        font = pygame.font.SysFont('Arial', 24)  # Police de caractère
-        score_text = font.render(f"Score: {self.score}", True, (255, 255, 255))  # Texte du score
-        self.screen.blit(score_text, (10, 10))  # Afficher le score à l'écran
 
     def collision(self):
         # game over if collision with body
         if self.snake.body[0] in self.snake.body[1:]:
-            self.running = False
-            self.display_game_over()
+            self.state = "GAME_OVER"
+            self.display.display_game_over(self.screen)
+            self.update_leaderboard()
             self.reset_game()
 
     def eat_food(self):
@@ -58,39 +81,38 @@ class Game :
         if self.snake.body[0] == self.food.position:
             self.snake.grow()
             self.food.spawn() # respawn food
-            self.score += 10
+            self.score += 1
 
     def reset_game(self):
     # Réinitialiser les éléments du jeu
         self.snake = Snake()  # Réinitialiser le serpent
         self.food = Food()  # Réinitialiser la nourriture
-        self.running = True  # Recommencer le jeu
+        self.best_score = max(self.best_score, self.score) # keep best score
         self.score = 0
 
-    def display_game_over(self):
-    # Display "Game Over" in middle of screen
-        font = pygame.font.Font(None, 74)  # Font size
-        game_over_text = font.render('Game Over', True, (255, 0, 0))  # Game Over in red
-        text_rect = game_over_text.get_rect(center=(self.screen.get_width() // 2, self.screen.get_height() // 2))  # middle screen
-        self.screen.blit(game_over_text, text_rect)  # display text on screen
-        pygame.display.flip()  # Refresh
-
-            # Attendre que le joueur appuie sur une touche pour redémarrer
-        waiting_for_input = True
-        while waiting_for_input:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    quit()
-                elif event.type == pygame.KEYDOWN:  # Attente d'une touche pour redémarrer
-                    waiting_for_input = False
+    def update_leaderboard(self):
+        self.leaderboard.append((self.player_name, self.score))
+        self.leaderboard.sort(key=lambda x: x[1], reverse=True)
+        self.leaderboard = self.leaderboard[:5]
 
 
     def run(self):
         # main game loop
         while self.running: # Keep the game running until quitting
-         self.handle_events()
-         self.eat_food()
-         self.update()
-         self.collision()
-         self.clock.tick(10) # Limit for 60 FPS
+            self.handle_events()
+
+            if self.state == "HOME":
+                self.display.home_screen(self.screen, self.font, self.player_name, self.best_score)
+
+            elif self.state == "PLAY":
+                self.snake.move(self.food, self)
+                self.eat_food()
+                self.update()
+                self.collision()
+                speed = min(self.base_speed + ((self.score // 10)*5), 30) # Limit to 30 fps
+                self.clock.tick(speed)
+
+            elif self.state == "GAME_OVER":
+                self.display.leaderboard(self.screen, self.font, self.leaderboard)
+                pygame.time.wait(3000)
+                self.state = "HOME"
