@@ -6,7 +6,7 @@ class Snake:
         self.body = [(100, 100), (90, 100), (80, 100)]  # Initial snake position
         self.direction = (10,0) # kickstart to right
         self.position = self.body[0]
-        self.size = 12 # size of each segment
+        self.size = 20 # size of each segment
         self.color = (128, 128,128) # grey like 3310
         self.gap = 1 # 1px between each segment
 
@@ -18,8 +18,8 @@ class Snake:
         self.position = new_head
 
         # Affiche les positions pour déboguer
-        print(f"Serpent position: {self.position}")
-        print(f"Nourriture position: {food.position}")
+        print(f"Snake position: {self.position}")
+        print(f"food position: {food.position}")
 
         # eat food condition
         if self.position == food.position:

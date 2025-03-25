@@ -95,7 +95,6 @@ class Game :
         self.leaderboard.sort(key=lambda x: x[1], reverse=True)
         self.leaderboard = self.leaderboard[:5]
 
-
     def run(self):
         # main game loop
         while self.running: # Keep the game running until quitting
