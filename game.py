@@ -3,16 +3,17 @@ from snake import Snake
 from food import Food
 from display import Display
 
-class Game :
+
+class Game:
     # contains all variables and functions necessary for the smooth gameplay
 
     def __init__(self):
         pygame.init()
         pygame.mixer.init()
 
-        self.screen = pygame.display.set_mode((600, 600)) # screen size
-        pygame.display.set_caption('Snake Game') # title
-        self.clock = pygame.time.Clock() #speed (fps)
+        self.screen = pygame.display.set_mode((600, 600))  # screen size
+        pygame.display.set_caption("Snake Game")  # title
+        self.clock = pygame.time.Clock()  # speed (fps)
         self.display = Display()
         self.running = True
 
@@ -32,14 +33,13 @@ class Game :
         self.base_speed = 6
         self.game_over = False
 
-
     def handle_events(self):
         # basic
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
 
-        # restart
+            # restart
             elif event.type == pygame.KEYDOWN:
                 if self.game_over:
                     if event.key == pygame.K_r:
@@ -47,7 +47,7 @@ class Game :
                         self.game_over = False
                         print("Game restarted")
 
-        # keyboard
+                # keyboard
                 else:
                     if event.key == pygame.K_UP:
                         self.snake.change_direction((0, -10))
@@ -89,7 +89,6 @@ class Game :
             # Call function to rise speed by +2 for every 5 points
             self.update_speed_level()
 
-
             # Check for collision with walls
             # (uncomment one of the following options according your choice)
 
@@ -101,20 +100,20 @@ class Game :
 
             # Option 2: Snake wraps around the screen
             # self.snake.body[0] = (self.snake.body[0][0] % 600, self.snake.body[0][1] % 600):
-                #print("Collision with wall! Game over.")
-                #self.game_over = True
-                #self.sound_crash.play()
+            # print("Collision with wall! Game over.")
+            # self.game_over = True
+            # self.sound_crash.play()
 
     def draw(self):
         # update the screen with game components
-        self.screen.fill((163,198,65)) #fill screen with green like 3310 version
+        self.screen.fill((163, 198, 65))  # fill screen with green like 3310 version
         if self.game_over:
             self.display.display_game_over(self.screen)
         else:
             self.snake.draw(self.screen)
             self.food.draw(self.screen)
             self.display.display_score(self.screen, self.score)  # Display score
-            self.display.display_speed(self.screen, self.clock) # Display speed
+            self.display.display_speed(self.screen, self.clock)  # Display speed
         pygame.display.flip()
 
     def run(self):
@@ -125,6 +124,7 @@ class Game :
             self.clock.tick(self.base_speed)  # Control the game speed
 
         pygame.quit()
+
 
 if __name__ == "__main__":
     game = Game()

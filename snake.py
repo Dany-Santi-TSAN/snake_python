@@ -1,5 +1,6 @@
 import pygame
 
+
 class Snake:
     # Contains the specific Snake logic
     def __init__(self):
@@ -25,9 +26,9 @@ class Snake:
         u_turn = (-self.direction[0], -self.direction[1])
         if new_direction != u_turn:
             self.direction = new_direction
-            print(f'Direction changed to: {self.direction}')
+            print(f"Direction changed to: {self.direction}")
         else:
-            print('U-turn is forbidden')
+            print("U-turn is forbidden")
 
     def draw(self, screen):
         for segment in self.body:
