@@ -18,9 +18,9 @@ class Game:
         self.running = True
 
         # Sounds effect
-        self.sound_bite = pygame.mixer.Sound("sounds/apple_bite.ogg")
-        self.sound_speed = pygame.mixer.Sound("sounds/f1_sound.ogg")
-        self.sound_crash = pygame.mixer.Sound("sounds/crash.ogg")
+        self.sound_bite = pygame.mixer.Sound("sounds/apple_bite-pygbag.ogg")
+        self.sound_speed = pygame.mixer.Sound("sounds/f1_sound-pygbag.ogg")
+        self.sound_crash = pygame.mixer.Sound("sounds/crash-pygbag.ogg")
 
         self.last_speed_increase_score = 0
         self.reset_game()
