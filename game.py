@@ -13,6 +13,7 @@ class Game :
         self.clock = pygame.time.Clock() #speed (fps)
         self.display = Display()
         self.running = True
+        self.last_speed_increase_score = 0
         self.reset_game()
         print("Game initialized")
 
@@ -20,7 +21,7 @@ class Game :
         self.snake = Snake()
         self.food = Food()
         self.score = 0
-        self.base_speed = 5
+        self.base_speed = 6
         self.game_over = False
 
 
@@ -49,6 +50,13 @@ class Game :
                     elif event.key == pygame.K_RIGHT:
                         self.snake.change_direction((10, 0))
 
+    def update_speed_level(self):
+        # rise speed every 5 points
+        if self.score > 0 and self.score % 5 == 0 and self.score != self.last_speed_increase_score:
+            self.base_speed = min(30, self.base_speed + 2)
+            self.last_speed_increase_score = self.score
+            print(f"Speed increased to: {self.base_speed} fps")
+
     def update(self):
         if not self.game_over:
             self.snake.move()
@@ -66,6 +74,10 @@ class Game :
                 self.food.spawn()
                 self.score += 1
                 print(f"New score: {self.score}")
+
+            # Call function to rise speed by +2 for every 5 points
+            self.update_speed_level()
+
 
             # Check for collision with walls
             # (uncomment one of the following options according your choice)
