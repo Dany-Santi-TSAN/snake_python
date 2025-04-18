@@ -6,8 +6,6 @@ class Food:
         self.spawn()
         self.image = pygame.image.load("sprite/apple_sprite.png")
         self.image = pygame.transform.scale(self.image, (10, 10))
-        #self.spawn()
-        #self.color = (0, 0, 0)  # Dark color
 
     def spawn(self):
         # Random spawn within the 600x600 screen limit
@@ -16,4 +14,3 @@ class Food:
 
     def draw(self, screen):
         screen.blit(self.image, self.position)
-        #pygame.draw.rect(screen, self.color, pygame.Rect(self.position[0], self.position[1], 10, 10))
