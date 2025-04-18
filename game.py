@@ -8,11 +8,19 @@ class Game :
 
     def __init__(self):
         pygame.init()
+        pygame.mixer.init()
+
         self.screen = pygame.display.set_mode((600, 600)) # screen size
         pygame.display.set_caption('Snake Game') # title
         self.clock = pygame.time.Clock() #speed (fps)
         self.display = Display()
         self.running = True
+
+        # Sounds effect
+        self.sound_bite = pygame.mixer.Sound("sounds/apple_bite.wav")
+        self.sound_speed = pygame.mixer.Sound("sounds/f1_sound.wav")
+        self.sound_crash = pygame.mixer.Sound("sounds/crash.wav")
+
         self.last_speed_increase_score = 0
         self.reset_game()
         print("Game initialized")
@@ -55,6 +63,7 @@ class Game :
         if self.score > 0 and self.score % 5 == 0 and self.score != self.last_speed_increase_score:
             self.base_speed = min(30, self.base_speed + 2)
             self.last_speed_increase_score = self.score
+            self.sound_speed.play()
             print(f"Speed increased to: {self.base_speed} fps")
 
     def update(self):
@@ -65,6 +74,7 @@ class Game :
             if self.snake.body[0] in self.snake.body[1:]:
                 print("Auto-collision! Game over.")
                 self.game_over = True
+                self.sound_crash.play()
                 return
 
             # check if snake eat food
@@ -73,6 +83,7 @@ class Game :
                 self.snake.grow()
                 self.food.spawn()
                 self.score += 1
+                self.sound_bite.play()
                 print(f"New score: {self.score}")
 
             # Call function to rise speed by +2 for every 5 points
@@ -86,9 +97,13 @@ class Game :
             if not (0 <= self.snake.body[0][0] < 600 and 0 <= self.snake.body[0][1] < 600):
                 print("Collision with wall! Game over.")
                 self.game_over = True
+                self.sound_crash.play()
 
             # Option 2: Snake wraps around the screen
-            # self.snake.body[0] = (self.snake.body[0][0] % 600, self.snake.body[0][1] % 600)
+            # self.snake.body[0] = (self.snake.body[0][0] % 600, self.snake.body[0][1] % 600):
+                #print("Collision with wall! Game over.")
+                #self.game_over = True
+                #self.sound_crash.play()
 
     def draw(self):
         # update the screen with game components
