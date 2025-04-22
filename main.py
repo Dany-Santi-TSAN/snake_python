@@ -4,12 +4,13 @@ from game_logic.snake import Snake
 from game_logic.food import Food
 from game_logic.display import Display
 
+
 class Game:
     # contains all variables and functions necessary for the smooth gameplay
 
     def __init__(self):
         pygame.init()
-        pygame.mixer.init()
+        # pygame.mixer.init()
 
         self.screen = pygame.display.set_mode((600, 600))  # screen size
         pygame.display.set_caption("Snake Game")  # title
@@ -18,9 +19,9 @@ class Game:
         self.running = True
 
         # Sounds effect
-        self.sound_bite = pygame.mixer.Sound("sounds/apple_bite-pygbag.ogg")
-        self.sound_speed = pygame.mixer.Sound("sounds/f1_sound-pygbag.ogg")
-        self.sound_crash = pygame.mixer.Sound("sounds/crash-pygbag.ogg")
+        # self.sound_bite = pygame.mixer.Sound("sounds/apple_bite-pygbag.ogg")
+        # self.sound_speed = pygame.mixer.Sound("sounds/f1_sound-pygbag.ogg")
+        # self.sound_crash = pygame.mixer.Sound("sounds/crash-pygbag.ogg")
 
         self.last_speed_increase_score = 0
         self.reset_game()
@@ -126,12 +127,10 @@ class Game:
 
         pygame.quit()
 
-if __name__ == "__main__":
+
+async def main():
     game = Game()
+    await game.run()
 
-    asyncio.ensure_future(game.run())
 
-    try:
-        asyncio.get_event_loop().run_forever()
-    except KeyboardInterrupt:
-        pygame.quit()
+asyncio.run(main())

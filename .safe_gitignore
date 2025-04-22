@@ -1,3 +1,0 @@
-# Ne jamais ignorer complètement un dossier, toujours laisser un fichier vide
-/build/*
-!/build/.keep

@@ -1,2 +1,2 @@
 [tool.pygbag]
-main = "build/main.py"
+main = "main.py"
