@@ -1,4 +1,2 @@
-[
-tool.pygbag
-]
+[tool.pygbag]
 main = "build/main.py"
