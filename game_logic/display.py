@@ -15,7 +15,7 @@ class Display:
 
         # Pos in middle of screen
         x = screen.get_width() // 2
-        y = screen.get_height() // 2.3
+        y = screen.get_height() // 2
 
         for i, line in enumerate(lines):
             text_surface = font.render(line, True, (255, 0, 0))
