@@ -12,9 +12,7 @@ snake_python/
 
 │
 
-├── game_snake.py           # Main file to start the game
-
-├── game.py           # Contains the Game logic
+├── main.py           # Contains the Game logic
 
 ├── display.py        # Contains the Disply logic
 
@@ -30,12 +28,10 @@ snake_python/
 
 │
 
-├── game_display.py           # Fichier principal pour démarrer le jeu
+├── main.py           # Contient la logique du jeu
 
-├── game.py           # Contient la classe Game, logique du jeu
+├── display.py        # Contient la logique d'affichage
 
-├── display.py
+├── snake.py          # Contient la logique spécifique du serpent
 
-├── snake.py          # Contient la classe Serpent (logique spécifique du serpent)
-
-└── food.py           # Contient la classe Food (logique de la nourriture)
+└── food.py           # Contient la logique de la nourriture

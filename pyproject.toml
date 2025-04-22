@@ -1,4 +1,4 @@
 [
 tool.pygbag
 ]
-main = "build/game.py"
+main = "main.py"
