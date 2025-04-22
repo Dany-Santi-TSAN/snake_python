@@ -3,6 +3,10 @@ Create A Snake Game with Python from scratch
 
 English version
 
+How can I publish ?
+Thanks to this wiki link :
+➡️ https://pygame-web.github.io/wiki/publishing/github.io/
+
 
 snake_python/
 
@@ -10,13 +14,13 @@ snake_python/
 
 ├── game_snake.py           # Main file to start the game
 
-├── game.py           # Contains the Game class, game logic
+├── game.py           # Contains the Game logic
 
-├── display.py
+├── display.py        # Contains the Disply logic
 
-├── snake.py          # Contains the Snake class (specific snake logic)
+├── snake.py          # Contains the Snake logic
 
-└── food.py           # Contains the Food class (food logic)
+└── food.py           # Contains the Food logic
 
 
 En français
