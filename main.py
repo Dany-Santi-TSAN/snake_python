@@ -80,6 +80,7 @@ class Game:
 
             # check if snake eat food
             if tuple(map(int, self.snake.body[0])) == tuple(map(int, self.food.position)):
+                print(f"Snake head: {self.snake.body[0]} | Food: {self.food.position}")
                 print("Snake ate the food!")
                 self.snake.grow()
                 self.food.spawn()
@@ -118,7 +119,7 @@ class Game:
         pygame.display.flip()
 
     async def run(self):
-        print('Game started')
+        print("Game started")
         while self.running:
             await self.handle_events()
             await self.update()
