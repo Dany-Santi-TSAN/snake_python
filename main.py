@@ -6,6 +6,7 @@ from pathlib import Path
 from game_logic.snake import Snake
 from game_logic.food import Food
 from game_logic.display import Display
+from audio_manager import AudioManager
 
 # Pygbag compatibility check
 PYGBAG = platform.system() == "Emscripten"
@@ -16,28 +17,14 @@ class Game:
     def __init__(self):
         pygame.init()
 
-        # Initialize mixer with specific settings for web compatibility
-        try:
-            if PYGBAG:
-                # Web-optimized mixer settings
-                pygame.mixer.pre_init(frequency=22050, size=-16, channels=2, buffer=1024)
-            pygame.mixer.init()
-        except pygame.error as e:
-            print(f"Audio initialization failed: {e}")
-            # Continue without audio rather than crash
-
         self.screen = pygame.display.set_mode((600, 600))
         pygame.display.set_caption("Snake Game")
         self.clock = pygame.time.Clock()
         self.display = Display()
         self.running = True
 
-        # Sound loading with error handling
-        self.sounds_enabled = True
-        self.sound_bite = None
-        self.sound_speed = None
-        self.sound_crash = None
-
+        # Initialize audio manager
+        self.audio = AudioManager()
         self.load_sounds()
 
         self.last_speed_increase_score = 0
@@ -45,51 +32,17 @@ class Game:
         print("Game initialized")
 
     def load_sounds(self):
-        """Load sounds with fallback handling"""
-        sound_files = {
-            "bite": "sounds/apple_bite-pygbag.ogg",
-            "speed": "sounds/f1_sound-pygbag.ogg",
-            "crash": "sounds/crash-pygbag.ogg",
-        }
+        """Load all game sounds"""
+        self.audio.load_sound('bite', 'sounds/apple_bite-pygbag.ogg')
+        self.audio.load_sound('speed', 'sounds/f1_sound-pygbag.ogg')
+        self.audio.load_sound('crash', 'sounds/crash-pygbag.ogg')
 
-        try:
-            # Check if files exist
-            for name, path in sound_files.items():
-                if not Path(path).exists():
-                    print(f"Warning: Sound file {path} not found")
-                    self.sounds_enabled = False
-                    return
+        # Set specific volumes
+        self.audio.set_volume('bite', 0.7)
+        self.audio.set_volume('speed', 0.5)
+        self.audio.set_volume('crash', 0.8)
 
-            # Load sounds
-            self.sound_bite = pygame.mixer.Sound(sound_files["bite"])
-            self.sound_speed = pygame.mixer.Sound(sound_files["speed"])
-            self.sound_crash = pygame.mixer.Sound(sound_files["crash"])
-
-            # Set volume levels
-            if self.sound_bite:
-                self.sound_bite.set_volume(0.7)
-            if self.sound_speed:
-                self.sound_speed.set_volume(0.5)
-            if self.sound_crash:
-                self.sound_crash.set_volume(0.8)
-
-            print("Sounds loaded successfully")
-
-        except pygame.error as e:
-            print(f"Failed to load sounds: {e}")
-            self.sounds_enabled = False
-        except Exception as e:
-            print(f"Unexpected error loading sounds: {e}")
-            self.sounds_enabled = False
-
-    def play_sound(self, sound):
-        """Safe sound playing with error handling"""
-        if self.sounds_enabled and sound:
-            try:
-                sound.play()
-            except pygame.error:
-                # Disable sounds if playback fails
-                self.sounds_enabled = False
+        print("Sounds loaded successfully")
 
     def reset_game(self):
         self.snake = Snake()
@@ -106,6 +59,10 @@ class Game:
 
             # restart
             elif event.type == pygame.KEYDOWN:
+                 # Unlock audio on first key press (required for web browsers)
+                if not self.audio.audio_unlocked:
+                    self.audio.unlock_audio()
+
                 if self.game_over:
                     if event.key == pygame.K_r:
                         self.reset_game()
@@ -127,7 +84,7 @@ class Game:
         if self.score > 0 and self.score % 5 == 0 and self.score != self.last_speed_increase_score:
             self.base_speed = min(30, self.base_speed + 2)
             self.last_speed_increase_score = self.score
-            self.play_sound(self.sound_speed)
+            self.audio.play_sound('speed')
             print(f"Speed increased to: {self.base_speed} fps")
 
     async def update(self):
@@ -138,7 +95,7 @@ class Game:
             if self.snake.body[0] in self.snake.body[1:]:
                 print("Auto-collision! Game over.")
                 self.game_over = True
-                self.play_sound(self.sound_crash)
+                self.audio.play_sound('crash')
                 return
 
             # Check if snake eat food
@@ -148,7 +105,7 @@ class Game:
                 self.snake.grow()
                 self.food.spawn()
                 self.score += 1
-                self.play_sound(self.sound_bite)
+                self.audio.play_sound('bite')
                 print(f"New score: {self.score}")
 
             self.update_speed_level()
@@ -160,7 +117,7 @@ class Game:
             if not (0 <= self.snake.body[0][0] < 600 and 0 <= self.snake.body[0][1] < 600):
                 print("Collision with wall! Game over.")
                 self.game_over = True
-                self.play_sound(self.sound_crash)
+                self.audio.play_sound('crash')
 
             # Option 2: Snake wraps around the screen
             # self.snake.body[0] = (self.snake.body[0][0] % 600, self.snake.body[0][1] % 600)

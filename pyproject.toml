@@ -9,7 +9,7 @@ dependencies = [
 
 [tool.pygbag]
 main = "main.py"
-cdn = "https://cdn.jsdelivr.net/pyodide/"
+cdn = "https://pyodide-cdn2.iodide.io/"
 archive = true
 # Assets to include
 assets = [
