@@ -21,8 +21,8 @@ assets = [
 
 # preload explicit
 preload = [
-    "sounds/apple_bite-pygbag.ogg"
-    "sounds/crash-pygbag.ogg"
+    "sounds/apple_bite-pygbag.ogg",
+    "sounds/crash-pygbag.ogg",
     "sounds/f1_sound-pygbag.ogg"
 ]
 
