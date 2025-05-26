@@ -1,2 +1,23 @@
+[project]
+name = "snake-game"
+version = "1.0.0"
+description = "Snake Game with Pygame and Pygbag"
+dependencies = [
+    "pygame",
+    "pygbag"
+]
+
 [tool.pygbag]
 main = "main.py"
+cdn = "https://cdn.jsdelivr.net/pyodide/"
+archive = true
+# Assets to include
+assets = [
+    "sounds/",
+    "sprite/",
+    "game_logic/"
+]
+# Web optimization
+optimize = true
+# Icon (optional - add if you have one)
+# icon = "sprite/icon.ico"
