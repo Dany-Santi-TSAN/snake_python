@@ -13,11 +13,11 @@ cdn = "https://pyodide-cdn2.iodide.io/"
 archive = true
 
 # Assets to include
-#assets = [
-#    "sounds/",
-#    "sprite/",
-#    "game_logic/"
-#]
+assets = [
+    "sounds/",
+    "sprite/",
+    "game_logic/"
+]
 
 # preload explicit
 preload = [
