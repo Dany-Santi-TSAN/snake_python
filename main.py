@@ -10,6 +10,7 @@ from game_logic.display import Display
 # Pygbag compatibility check
 PYGBAG = platform.system() == "Emscripten"
 
+
 class Game:
     # contains all variables and functions necessary for the smooth gameplay
     def __init__(self):
@@ -46,9 +47,9 @@ class Game:
     def load_sounds(self):
         """Load sounds with fallback handling"""
         sound_files = {
-            'bite': 'sounds/apple_bite-pygbag.ogg',
-            'speed': 'sounds/f1_sound-pygbag.ogg',
-            'crash': 'sounds/crash-pygbag.ogg'
+            "bite": "sounds/apple_bite-pygbag.ogg",
+            "speed": "sounds/f1_sound-pygbag.ogg",
+            "crash": "sounds/crash-pygbag.ogg",
         }
 
         try:
@@ -60,9 +61,9 @@ class Game:
                     return
 
             # Load sounds
-            self.sound_bite = pygame.mixer.Sound(sound_files['bite'])
-            self.sound_speed = pygame.mixer.Sound(sound_files['speed'])
-            self.sound_crash = pygame.mixer.Sound(sound_files['crash'])
+            self.sound_bite = pygame.mixer.Sound(sound_files["bite"])
+            self.sound_speed = pygame.mixer.Sound(sound_files["speed"])
+            self.sound_crash = pygame.mixer.Sound(sound_files["crash"])
 
             # Set volume levels
             if self.sound_bite:
@@ -167,7 +168,7 @@ class Game:
 
     def draw(self):
         # update the screen with game components
-        self.screen.fill((163, 198, 65)) # fill screen with green like 3310 version
+        self.screen.fill((163, 198, 65))  # fill screen with green like 3310 version
         if self.game_over:
             self.display.display_game_over(self.screen)
         else:
@@ -183,17 +184,20 @@ class Game:
             await self.handle_events()
             await self.update()
             self.draw()
-            self.clock.tick(self.base_speed) # Control the game speed
-            await asyncio.sleep(0) # Yield control to the event loop
+            self.clock.tick(self.base_speed)  # Control the game speed
+            await asyncio.sleep(0)  # Yield control to the event loop
         pygame.quit()
+
 
 async def main():
     game = Game()
     await game.run()
 
+
 if __name__ == "__main__":
     if PYGBAG:
         import pygbag.aio
+
         pygbag.aio.run(main())
     else:
         asyncio.run(main())
