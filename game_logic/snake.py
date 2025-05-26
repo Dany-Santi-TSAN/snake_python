@@ -18,8 +18,20 @@ class Snake:
 
     def grow(self):
         tail = self.body[-1]
-        self.body.append(tail)  # Grow the snake
-        print(f"Snake grew, new size: {len(self.body)}")
+        second_last = self.body[-2]
+
+        # Calcul de la direction du dernier segment
+        delta_x = tail[0] - second_last[0]
+        delta_y = tail[1] - second_last[1]
+
+        new_tail = (tail[0] + delta_x, tail[1] + delta_y)
+        self.body.append(new_tail)
+        print(f"Snake grew, new size: {len(self.body)} | New tail: {new_tail}")
+
+    # def grow(self):
+    # tail = self.body[-1]
+    # self.body.append(tail)  # Grow the snake
+    # print(f"Snake grew, new size: {len(self.body)}")
 
     def change_direction(self, new_direction):
         # Forbid u-turn: check that the direction is not opposite
