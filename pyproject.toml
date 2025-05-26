@@ -11,12 +11,21 @@ dependencies = [
 main = "main.py"
 cdn = "https://pyodide-cdn2.iodide.io/"
 archive = true
+
 # Assets to include
-assets = [
-    "sounds/",
-    "sprite/",
-    "game_logic/"
+#assets = [
+#    "sounds/",
+#    "sprite/",
+#    "game_logic/"
+#]
+
+# preload explicit
+preload = [
+    "sounds/apple_bite-pygbag.ogg"
+    "sounds/crash-pygbag.ogg"
+    "sounds/f1_sound-pygbag.ogg"
 ]
+
 # Web optimization
 optimize = true
 # Icon (optional - add if you have one)

@@ -1,6 +1,5 @@
 import pygame
 import asyncio
-import sys
 import platform
 from pathlib import Path
 from game_logic.snake import Snake
@@ -33,14 +32,14 @@ class Game:
 
     def load_sounds(self):
         """Load all game sounds"""
-        self.audio.load_sound('bite', 'sounds/apple_bite-pygbag.ogg')
-        self.audio.load_sound('speed', 'sounds/f1_sound-pygbag.ogg')
-        self.audio.load_sound('crash', 'sounds/crash-pygbag.ogg')
+        self.audio.load_sound("bite", "sounds/apple_bite-pygbag.ogg")
+        self.audio.load_sound("speed", "sounds/f1_sound-pygbag.ogg")
+        self.audio.load_sound("crash", "sounds/crash-pygbag.ogg")
 
         # Set specific volumes
-        self.audio.set_volume('bite', 0.7)
-        self.audio.set_volume('speed', 0.5)
-        self.audio.set_volume('crash', 0.8)
+        self.audio.set_volume("bite", 0.7)
+        self.audio.set_volume("speed", 0.5)
+        self.audio.set_volume("crash", 0.8)
 
         print("Sounds loaded successfully")
 
@@ -59,7 +58,7 @@ class Game:
 
             # restart
             elif event.type == pygame.KEYDOWN:
-                 # Unlock audio on first key press (required for web browsers)
+                # Unlock audio on first key press (required for web browsers)
                 if not self.audio.audio_unlocked:
                     self.audio.unlock_audio()
 
@@ -84,7 +83,7 @@ class Game:
         if self.score > 0 and self.score % 5 == 0 and self.score != self.last_speed_increase_score:
             self.base_speed = min(30, self.base_speed + 2)
             self.last_speed_increase_score = self.score
-            self.audio.play_sound('speed')
+            self.audio.play_sound("speed")
             print(f"Speed increased to: {self.base_speed} fps")
 
     async def update(self):
@@ -95,7 +94,7 @@ class Game:
             if self.snake.body[0] in self.snake.body[1:]:
                 print("Auto-collision! Game over.")
                 self.game_over = True
-                self.audio.play_sound('crash')
+                self.audio.play_sound("crash")
                 return
 
             # Check if snake eat food
@@ -105,7 +104,7 @@ class Game:
                 self.snake.grow()
                 self.food.spawn()
                 self.score += 1
-                self.audio.play_sound('bite')
+                self.audio.play_sound("bite")
                 print(f"New score: {self.score}")
 
             self.update_speed_level()
@@ -117,7 +116,7 @@ class Game:
             if not (0 <= self.snake.body[0][0] < 600 and 0 <= self.snake.body[0][1] < 600):
                 print("Collision with wall! Game over.")
                 self.game_over = True
-                self.audio.play_sound('crash')
+                self.audio.play_sound("crash")
 
             # Option 2: Snake wraps around the screen
             # self.snake.body[0] = (self.snake.body[0][0] % 600, self.snake.body[0][1] % 600)

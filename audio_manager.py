@@ -2,6 +2,7 @@ import pygame
 import platform
 from pathlib import Path
 
+
 class AudioManager:
     """Audio manager with web compatibility and user interaction handling"""
 
@@ -22,7 +23,7 @@ class AudioManager:
                     frequency=44100,  # Higher frequency for better web support
                     size=-16,
                     channels=2,
-                    buffer=512  # Smaller buffer for web
+                    buffer=512,  # Smaller buffer for web
                 )
 
             pygame.mixer.init()
