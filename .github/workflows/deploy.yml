@@ -35,7 +35,7 @@ jobs:
 
     - name: Build with Pygbag
       run: |
-        python -m pygbag --archive --cdn https://cdn.jsdelivr.net/pyodide/ main.py
+        python -m pygbag --archive --cdn https://pygame-web.github.io/ main.py
 
     - name: List generated files
       run: |
