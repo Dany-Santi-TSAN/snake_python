@@ -48,21 +48,37 @@ cd dist && python -m http.server 8000
 ## 📁 Structure
 
 snake-game/
+
 ├── main.py               # Point d'entrée principal
+
 ├── game_logic/           # Logique du jeu
+
 │   ├── snake.py          # Classe Snake
+
 │   ├── food.py           # Classe Food
+
 │   └── display.py        # Affichage et UI
+
 ├── sounds/               # Fichiers audio (.ogg)
+
 │   ├── apple_bite-pygbag.ogg
+
 │   ├── f1_sound-pygbag.ogg
+
 │   └── crash-pygbag.ogg
+
 ├── sprite/               # Images et sprites
+
 │   └── apple_sprite.png
+
 ├── .github/workflows/    # CI/CD
+
 │   └── deploy.yml
+
 ├── build.sh              # Script de build local
+
 ├── pyproject.toml        # Configuration
+
 └── README.md
 
 ## 🎯 Contrôles
@@ -75,7 +91,7 @@ Fermer : Quitter le jeu
 
 ## 🔧 Corrections apportées
 
-**Problèmes résolus** :
+Problèmes résolus :
 
 **Audio WebAssembly** : Gestion d'erreurs et fallbacks
 
@@ -97,7 +113,7 @@ CI/CD automatique avec GitHub Actions
 
 ## 🛠️ Développement
 
-Modifier les sons
+### Modifier les sons
 
 Ajouter tes fichiers .ogg dans sounds/
 
@@ -105,17 +121,17 @@ Modifier les références dans main.py
 
 Rebuild avec ./build.sh
 
-Modifier le gameplay
+### Modifier le gameplay
 
-Snake : game_logic/snake.py
+**Snake** : game_logic/snake.py
 
-Food : game_logic/food.py
+**Food** : game_logic/food.py
 
-Affichage : game_logic/display.py
+**Affichage** : game_logic/display.py
 
-Logique principale : main.py
+**Logique principale** : main.py
 
-Ajouter des sprites
+### Ajouter des sprites
 
 Placer les images dans sprite/
 
@@ -127,11 +143,11 @@ Décommenter les lignes d'image dans la classe Food
 
 Le jeu ne se lance pas en local
 
-## Vérifier l'installation
+### Vérifier l'installation
 pip list | grep pygbag
 pip list | grep pygame
 
-## Réinstaller si nécessaire
+### Réinstaller si nécessaire
 pip install --upgrade pygbag pygame
 
 Écran noir après déploiement
@@ -142,7 +158,7 @@ Consulter la console navigateur pour les erreurs
 
 S'assurer que les chemins de fichiers sont corrects
 
-Audio ne fonctionne pas
+### Audio ne fonctionne pas
 
 Le navigateur peut bloquer l'audio au début
 
