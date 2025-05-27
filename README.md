@@ -30,20 +30,20 @@ https://pygame-web.github.io/wiki/publishing/github.io/
 
 https://pygame-web.github.io/
 
-Local
+## Local
 
-## Installer les dépendances
+### Installer les dépendances
 pip install pygbag pygame
 
-## Rendre le script exécutable
+### Rendre le script exécutable
 chmod +x build.sh
 
-## Builder le jeu
+### Builder le jeu
 ./build.sh
 
-## Tester localement
+### Tester localement
 cd dist && python -m http.server 8000
-### Ouvrir http://localhost:8000
+## Ouvrir http://localhost:8000
 
 ## 📁 Structure
 
@@ -53,27 +53,27 @@ snake-game/
 
 ├── game_logic/           # Logique du jeu
 
-│   ├── snake.py          # Classe Snake
+│       ├── snake.py          # Classe Snake
 
-│   ├── food.py           # Classe Food
+│       ├── food.py           # Classe Food
 
-│   └── display.py        # Affichage et UI
+│       └── display.py        # Affichage et UI
 
 ├── sounds/               # Fichiers audio (.ogg)
 
-│   ├── apple_bite-pygbag.ogg
+│       ├── apple_bite-pygbag.ogg
 
-│   ├── f1_sound-pygbag.ogg
+│       ├── f1_sound-pygbag.ogg
 
-│   └── crash-pygbag.ogg
+│       └── crash-pygbag.ogg
 
 ├── sprite/               # Images et sprites
 
-│   └── apple_sprite.png
+│       └── apple_sprite.png
 
 ├── .github/workflows/    # CI/CD
 
-│   └── deploy.yml
+│       └── deploy.yml
 
 ├── build.sh              # Script de build local
 
@@ -114,6 +114,16 @@ CI/CD automatique avec GitHub Actions
 ## 🛠️ Développement
 
 ### Modifier les sons
+
+Au cas où si vous arrivez à modifier le son :
+💀 Le son fonctionne en local.
+🕳️ Mais dès que je le déploie, le silence se fait.
+J’ai lu 3 docs, consulté 3 IA, parlé à 2 navigateurs.
+Rien. Que le vide.
+…
+Bref, bienvenue dans le monde merveilleux de WebAssembly et des navigateurs capricieux.
+
+Mais théoriquement il faut faire ça :
 
 Ajouter tes fichiers .ogg dans sounds/
 
