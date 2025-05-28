@@ -51,6 +51,8 @@ snake-game/
 
 ├── main.py               # Point d'entrée principal
 
+├── audio_manager.py      # Classe AudioManager
+
 ├── game_logic/           # Logique du jeu
 
 │       ├── snake.py          # Classe Snake
@@ -99,11 +101,10 @@ Problèmes résolus :
 
 **Chargement assets** : Vérification d'existence des fichiers
 
-**Compatibilité navigateur** : Paramètres mixer optimisés
+**Compatibilité navigateur** : Paramètres mixer optimisés (non résolu)
 
 ## Améliorations :
 
-Gestion d'erreurs robuste pour l'audio
 
 Détection automatique de l'environnement (local vs web)
 
@@ -140,6 +141,8 @@ Rebuild avec ./build.sh
 **Affichage** : game_logic/display.py
 
 **Logique principale** : main.py
+
+**Audio** : audio_manager.py
 
 ### Ajouter des sprites
 
